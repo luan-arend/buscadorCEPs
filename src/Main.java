@@ -4,11 +4,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        System.out.println("Digite seu CEP:");
         Scanner sc = new Scanner(System.in);
         var cep = sc.nextLine();
-        var busca = "https://viacep.com.br/ws/" + cep.replace("-","") + "/json/";
-        var endereco = new HttpRequestService(busca).getResponseBody();
 
-        System.out.println(endereco);
+        try {
+            Endereco enderecoConsulta = new ConsultaCep().consultarCEP(cep);
+            System.out.println(enderecoConsulta);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Finalizando aplicação.");
+        }
     }
 }

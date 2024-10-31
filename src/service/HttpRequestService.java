@@ -1,5 +1,7 @@
 package service;
 
+import com.google.gson.JsonSyntaxException;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,7 +9,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class HttpRequestService {
-    private String responseBody;
+    private String responseBody = "";
     public String getResponseBody() {
         return responseBody;
     }
@@ -21,8 +23,8 @@ public class HttpRequestService {
             HttpResponse<String> response = client
                     .send(request, HttpResponse.BodyHandlers.ofString());
             responseBody = response.body();
-        } catch (RuntimeException | IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException("Não foi possível buscar a informação.");
         }
     }
 }
